@@ -1,5 +1,4 @@
 import numpy as np
-# pandas = lucreaza cu tabele (DataFrame-uri), ca un Excel in Python
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_wine
@@ -9,9 +8,7 @@ from sklearn.tree import plot_tree
 from sklearn.metrics import accuracy_score
 
 # EXERCITIUL 1: Incarcam setul de date wine
-print("=" * 60)
-print("EXERCITIUL 1: Incarcare set de date Wine")
-print("=" * 60)
+print("\n EXERCITIUL 1: Incarcare set de date Wine")
 wine = load_wine()
 print("Setul de date contine:", wine.keys())
 print(f"Numar de exemple: {wine.data.shape[0]}")
@@ -19,19 +16,13 @@ print(f"Numar de caracteristici: {wine.data.shape[1]}")
 print(f"Numar de clase: {len(wine.target_names)}")
 
 # EXERCITIUL 2: Afisam primele 5 randuri intr-un DataFrame
-print("\n" + "=" * 60)
-print("EXERCITIUL 2: Primele 5 randuri")
-print("=" * 60)
-# Metoda 1: Cream noi DataFrame-ul
+print("\n EXERCITIUL 2: Primele 5 randuri")
 df = pd.DataFrame(data=wine.data, columns=wine.feature_names)
 df['target'] = wine.target
-# Metoda 2 (cea ceruta in cerinta - cu as_frame):
 print(df.head())
 
 # EXERCITIUL 3: Listam toate caracteristicile
-print("\n" + "=" * 60)
-print("EXERCITIUL 3: Numele caracteristicilor")
-print("=" * 60)
+print("\n EXERCITIUL 3: Numele caracteristicilor")
 print("Caracteristici (13):")
 for i, nume in enumerate(wine.feature_names, start=1):
     print(f"  {i}. {nume}")
@@ -40,10 +31,7 @@ print("\nClase (3 tipuri de vin):")
 print(wine.target_names)
 
 # EXERCITIUL 4: Antrenarea unui arbore de decizie pe 2 caracteristici
-print("\n" + "=" * 60)
-print("EXERCITIUL 4: Arbore de decizie cu max_depth=2")
-print("=" * 60)
-
+print("\n EXERCITIUL 4: Arbore de decizie cu max_depth=2")
 #Selectam DOAR 2 caracteristici: alcohol si flavanoids
 X = df[['alcohol', 'flavanoids']]
 y = df['target']
@@ -70,9 +58,7 @@ plt.show()
 
 
 # EXERCITIUL 5: Arbore complet (fara limita de adancime)
-print("\n" + "=" * 60)
-print("EXERCITIUL 5: Arbore complet (max_depth=None)")
-print("=" * 60)
+print(" \n EXERCITIUL 5: Arbore complet (max_depth=None)")
 model_complet = DecisionTreeClassifier(max_depth=None, random_state=42)
 model_complet.fit(X_train, y_train)
 y_pred_complet = model_complet.predict(X_test)
@@ -87,10 +73,7 @@ print(f"  Arbore complet:           {acuratete_complet:.4f}")
 print("Atentie: arborele complet poate face OVERFITTING!")
 
 # EXERCITIUL 6: Arbore pe TOATE cele 13 caracteristici
-print("\n" + "=" * 60)
-print("EXERCITIUL 6: Arbore pe toate cele 13 caracteristici")
-print("=" * 60)
-
+print(" \n EXERCITIUL 6: Arbore pe toate cele 13 caracteristici")
 X_full = df[wine.feature_names]
 y_full = df['target']
 
@@ -127,15 +110,12 @@ plt.tight_layout()
 plt.show()
 
 # EXERCITIUL 7 (BONUS): Mini-arbore pe hartie - calcul Gini
-print("\n" + "=" * 60)
-print("EXERCITIUL 7 (BONUS): Calcul Gini pe un subset")
-print("=" * 60)
+print(" \n EXERCITIUL 7 (BONUS): Calcul Gini pe un subset")
 
 subset = df[['alcohol', 'flavanoids', 'target']].head(6)
 print("Subset cu 6 exemple:")
 print(subset)
 
-# Numaram cate exemple sunt din fiecare clasa
 from collections import Counter
 counter = Counter(subset['target'])
 total = len(subset)
