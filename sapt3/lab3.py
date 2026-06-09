@@ -1,161 +1,147 @@
-#exercitiul 2
-while True:
-    nota_input = input("Introdu nota obținută la examen: ")
-    nota = float(nota_input)
-
-    if nota < 1 or nota > 10:
-        print("Notă invalidă! Te rog să reintroduci o valoare validă între 1 și 10.")
-    elif nota >= 9:
-        print("Calificativ: Excelent")
-        break
-    elif nota >= 7:
-        print("Calificativ: Bine")
-        break
-    elif nota >= 5:
-        print("Calificativ: Suficient")
-        break
-    else:
-        print("Calificativ: Reexaminare")
-        break
-
-#exercitiul 3
 import random
+from functools import reduce
+import datetime
 
-numar_secret = random.randint(1, 50)
-incercari = 0
 
-print("Am ales un număr între 1 și 50. Încearcă să îl ghicești!")
+# Exercitiul 1
+def joc_piatra_foarfeca_hartie():
+    while True:
+        j1 = input("Jucator 1 (piatra/foarfeca/hartie): ").lower()
+        j2 = input("Jucator 2 (piatra/foarfeca/hartie): ").lower()
 
-while True:
-    try:
-        ghicit = int(input("Ghicește numărul (1-50): "))
-        incercari += 1
-
-        if ghicit < numar_secret:
-            print("Numărul este mai mare!")
-        elif ghicit > numar_secret:
-            print("Numărul este mai mic!")
+        if j1 == j2:
+            print("Egalitate!")
+        elif (j1 == "piatra" and j2 == "foarfeca") or \
+             (j1 == "foarfeca" and j2 == "hartie") or \
+             (j1 == "hartie" and j2 == "piatra"):
+            print("Felicitari Jucator 1! Ai castigat!")
         else:
-            print(f"Felicitări! Ai ghicit numărul în {incercari} încercări.")
+            print("Felicitari Jucator 2! Ai castigat!")
+
+        raspuns = input("Mai jucati o tura? (da/nu): ").lower()
+        if raspuns != "da":
+            print("La revedere!")
             break
-    except ValueError:
-        print("Te rog introdu un număr valid.")
+
+joc_piatra_foarfeca_hartie()
 
 
-#exercitiul 4
-orase = ["București", "Cluj-Napoca", "Timișoara", "Iași", "Sibiu"]
+# Exercitiul 2
+def genereaza_factura(client, **produse):
+    print(f"Factura pentru: {client}")
+    print("-" * 30)
+    total = 0
+    for produs, pret in produse.items():
+        print(f"{produs}: {pret} lei")
+        total += pret
+    print("-" * 30)
+    print(f"Total: {total} lei")
 
-for index, oras in enumerate(orase, start=1):
-    print(f"{index}. {oras}")
-
-
-#exercitiul 5
-import random
-
-print("Bine ai venit la Loteria Python! Alege 6 numere între 1 și 49.")
-numere_alese = []
-
-for i in range(1, 7):
-    numar = int(input(f"Numărul {i}: "))
-    numere_alese.append(numar)
-
-# Generăm 6 numere unice aleatorii între 1 și 49
-numere_extrase = random.sample(range(1, 50), 6)
-print(f"\nNumere extrase: {numere_extrase}")
-
-# Găsim numerele comune
-numere_ghicite = list(set(numere_alese).intersection(set(numere_extrase)))
-
-print(f"Ai ghicit {len(numere_ghicite)} numere: {numere_ghicite}")
-
-if len(numere_ghicite) >= 3:
-    print("Felicitări! Ai câștigat un premiu mic!")
-elif len(numere_ghicite) == 6:
-    print("JACKPOT! Ai câștigat marele premiu!")
-else:
-    print("Nu ai câștigat. Mai încearcă!")
+genereaza_factura("Maria", paine=5, lapte=8, branza=15, oua=12)
 
 
-#exercitiul 6
-inventar = []
+# Exercitiul 3
+def normalize_data(lista):
+    minim = min(lista)
+    maxim = max(lista)
+    return [(x - minim) / (maxim - minim) for x in lista]
 
-print("Ai intrat într-o pădure magică.")
-alegere1 = input("Mergi la stânga sau la dreapta? (stanga/dreapta): ").lower()
-
-if alegere1 == "stanga":
-    print("Te întâlnești cu un lup fioros!")
-    actiune = input("Fugi sau lupți? (fugi/lupti): ").lower()
-    if actiune == "fugi":
-        print("Ai scăpat cu bine, dar te-ai întors la intrare.")
-    else:
-        print("Ai învins lupul și ai găsit o Sabie Magică!")
-        inventar.append("Sabie Magică")
-
-elif alegere1 == "dreapta":
-    print("Ai găsit o comoară ascunsă sub un copac bătrân!")
-    inventar.append("Monede de aur")
-else:
-    print("Nu ai ales nicio direcție și te-ai rătăcit.")
-
-print(f"Inventarul tău final: {inventar}")
+data = [10, 20, 30, 40, 50]
+normalized_data = normalize_data(data)
+print(normalized_data)
 
 
-#exercitiul 7
-comentariu = input("Introdu un comentariu: ").lower()
+# Exercitiul 4
+patrat = lambda lista: [x ** 2 for x in lista]
 
-cuvinte_pozitive = ["bine", "frumos", "super", "excelent", "minunat"]
-cuvinte_negative = ["urât", "prost", "groaznic", "dezamăgitor"]
-
-# Verificăm prezența cuvintelor
-este_pozitiv = any(cuvant in comentariu for cuvant in cuvinte_pozitive)
-este_negativ = any(cuvant in comentariu for cuvant in cuvinte_negative)
-
-if este_pozitiv and not este_negativ:
-    print("Comentariu pozitiv!")
-elif este_negativ and not este_pozitiv:
-    print("Comentariu negativ!")
-else:
-    print("Comentariu neutru.")
+my_list = [1, 2, 3, 4, 5]
+print(patrat(my_list))
 
 
-#exercitiul 8
-import time
+# Exercitiul 5
+a = [(0, 2), (4, 3), (9, 9), (10, -1)]
+sorted_a = sorted(a, key=lambda x: x[1])
+print(sorted_a)
 
-tari_risc = ["Coreea de Nord", "Siria", "Iran"]
-tranzactii_suspecte = 0
-numar_tranzactii = 0
-timp_start = time.time()
 
-print("Sistem de procesare tranzacții (scrie 'stop' la suma pentru a opri)")
+# Exercitiul 6
+orig_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+even_list = list(filter(lambda x: x % 2 == 0, orig_list))
+odd_list = list(filter(lambda x: x % 2 != 0, orig_list))
 
-while True:
-    if tranzactii_suspecte >= 3:
-        print("\n3 tranzacții suspecte detectate! Cont blocat.")
-        break
+print(f"Pare: {even_list}")
+print(f"Impare: {odd_list}")
 
-    suma_input = input("\nIntrodu suma: ")
-    if suma_input.lower() == 'stop':
-        break
 
-    suma = float(suma_input)
-    tara = input("Introdu țara de proveniență: ")
-    numar_tranzactii += 1
+# Exercitiul 7
+preturi = [100, None, 200, 50, None, 300, 75]
 
-    # 1. Verificare BOT (peste 3 tranzacții în mai puțin de 60 de secunde)
-    timp_curent = time.time()
-    if numar_tranzactii > 3 and (timp_curent - timp_start) < 60:
-        print(f"Tranzacție din {tara} → FRAUDĂ BOT (Prea multe acțiuni rapide)")
-        tranzactii_suspecte += 1
-        numar_tranzactii = 0  # resetăm contorul pentru următorul minut
-        timp_start = time.time()
-        continue
+preturi_filtrate = list(filter(lambda x: x is not None, preturi))
+preturi_reduse = list(map(lambda x: x * 0.9, preturi_filtrate))
 
-    # 2. Verificare Sumă și Țară
-    if tara in tari_risc:
-        print(f"Tranzacție: {suma} RON din {tara} → Frauduloasă (țară cu risc ridicat)")
-        tranzactii_suspecte += 1
-    elif suma > 10000:
-        print(f"Tranzacție: {suma} RON din {tara} → Suspicioasă (sumă mare)")
-        tranzactii_suspecte += 1
-    else:
-        print(f"Tranzacție: {suma} RON din {tara} → Sigură")
+print(f"Preturi initiale: {preturi}")
+print(f"Dupa filtrare: {preturi_filtrate}")
+print(f"Dupa reducere 10%: {preturi_reduse}")
+
+
+# Exercitiul 8
+data_curenta = datetime.datetime.now()
+
+an = lambda d: d.year
+luna = lambda d: d.month
+zi = lambda d: d.day
+ora = lambda d: d.time()
+
+print(data_curenta)
+print(an(data_curenta))
+print(luna(data_curenta))
+print(zi(data_curenta))
+print(ora(data_curenta))
+
+
+# Exercitiul 9
+def sum_lists(l1, l2):
+    return list(map(lambda pereche: pereche[0] + pereche[1], zip(l1, l2)))
+
+list1 = [1, 2, 3, 4, 5]
+list2 = [10, 20, 30, 40, 50]
+result = sum_lists(list1, list2)
+print(result)
+
+
+# Exercitiul 10
+pare = [x for x in range(0, 101) if x % 2 == 0]
+print(pare)
+
+cuburi = [x ** 3 for x in range(1, 11)]
+print(cuburi)
+
+lista_a = [1, 2, 3, 4, 5, 6]
+lista_b = [4, 5, 6, 7, 8, 9]
+comune = [x for x in lista_a if x in lista_b]
+print(comune)
+
+
+# Exercitiul 11
+primele_10_pare = {x for x in range(2, 21) if x % 2 == 0}
+print(primele_10_pare)
+
+text = "informatica"
+litere_distincte = {c for c in text}
+print(litere_distincte)
+
+propozitie = "Acesta este un exemplu pentru programare in python"
+cuvinte_lungi = {cuvant for cuvant in propozitie.split() if len(cuvant) >= 5}
+print(cuvinte_lungi)
+
+
+# Exercitiul 12
+patrate = {x: x ** 2 for x in range(1, 11)}
+print(patrate)
+
+text = "programare"
+aparitii = {litera: text.count(litera) for litera in text}
+print(aparitii)
+
+divizori = {x: [d for d in range(1, x + 1) if x % d == 0] for x in range(1, 11)}
+print(divizori)
